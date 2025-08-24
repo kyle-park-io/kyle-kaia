@@ -1,0 +1,6 @@
+# pnpm workspace 설정 (현재는 단일 패키지)
+packages:
+  - '.'
+  # 향후 확장 시:
+  # - 'packages/*'
+  # - 'apps/*'
