@@ -42,8 +42,8 @@ export const KaiaWalletComponent: React.FC = () => {
 
       if (state.account) {
         const balanceWei = await wallet.getBalance();
-        const balanceKlay = formatEther(balanceWei);
-        setBalance(balanceKlay);
+        const balanceKaia = formatEther(balanceWei);
+        setBalance(balanceKaia);
       }
     } catch (err) {
       setError((err as Error).message);
@@ -126,8 +126,8 @@ export const KaiaWalletComponent: React.FC = () => {
 
         // 잔액 업데이트
         const newBalanceWei = await currentWallet.getBalance();
-        const newBalanceKlay = formatEther(newBalanceWei);
-        setBalance(newBalanceKlay);
+        const newBalanceKaia = formatEther(newBalanceWei);
+        setBalance(newBalanceKaia);
       } catch (err) {
         setError((err as Error).message);
       }
@@ -185,7 +185,7 @@ export const KaiaWalletComponent: React.FC = () => {
               계정: <code>{account.address}</code>
             </p>
             <p>
-              잔액: <strong>{balance} KLAY</strong>
+              잔액: <strong>{balance} KAIA</strong>
             </p>
           </>
         )}
@@ -283,7 +283,7 @@ export const KaiaWalletComponent: React.FC = () => {
                 const to = formData.get('to') as string;
                 const amount = formData.get('amount') as string;
                 if (to && amount) {
-                  // KLAY를 Wei로 변환
+                  // KAIA를 Wei로 변환
                   const amountInWei = parseEther(amount).toString();
                   sendTransaction(to, amountInWei);
                 }
@@ -303,7 +303,7 @@ export const KaiaWalletComponent: React.FC = () => {
               </div>
               <div style={{ marginBottom: '10px' }}>
                 <label>
-                  금액 (KLAY):
+                  금액 (KAIA):
                   <input
                     type="number"
                     name="amount"

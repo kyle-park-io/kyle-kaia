@@ -57,15 +57,15 @@ if (availableWallets.includes(provider)) {
   const account = await wallet.connect();
   console.log('연결된 계정:', account);
 
-  // 잔액 조회 (Wei를 KLAY로 변환)
+  // 잔액 조회 (Wei를 KAIA로 변환)
   const balanceWei = await wallet.getBalance();
-  const balanceKlay = formatEther(balanceWei);
-  console.log('잔액:', balanceKlay, 'KLAY');
+  const balanceKaia = formatEther(balanceWei);
+  console.log('잔액:', balanceKaia, 'KAIA');
 
   // 트랜잭션 전송
   const result = await wallet.sendTransaction({
     to: '0x742d35Cc6634C0532925a3b8D0Ac9E0C4E0f5c2',
-    value: parseEther('1.0').toString(), // 1 KLAY
+    value: parseEther('1.0').toString(), // 1 KAIA
   });
   console.log('트랜잭션 해시:', result.hash);
 }
@@ -108,7 +108,7 @@ const MyComponent: React.FC = () => {
       {account ? (
         <div>
           <p>연결된 계정: {account.address}</p>
-          <p>잔액: {account.balance} KLAY</p>
+          <p>잔액: {account.balance} KAIA</p>
         </div>
       ) : (
         <button onClick={connectWallet}>지갑 연결</button>
@@ -231,9 +231,42 @@ pnpm run build
 ### 테스트
 
 ```bash
+# 단위 테스트 (기본)
 pnpm test
-pnpm run test:watch  # 감시 모드
+pnpm run test:unit
+
+# 통합 테스트 (실제 네트워크 연결 필요)
+pnpm run test:integration
+
+# 모든 테스트 실행
+pnpm run test:all
+
+# 감시 모드
+pnpm run test:watch              # 단위 테스트 감시
+pnpm run test:integration:watch  # 통합 테스트 감시
 ```
+
+#### 테스트 종류
+
+**단위 테스트 (Unit Tests)**
+
+- Mock을 사용한 빠른 테스트
+- 네트워크 연결 불필요
+- 기본 `pnpm test` 명령어로 실행
+
+**통합 테스트 (Integration Tests)**
+
+- 실제 Kaia 네트워크와 연결
+- 인터넷 연결 필요
+- 실제 주소와 트랜잭션 데이터 사용
+- `pnpm run test:integration` 명령어로 실행
+
+통합 테스트는 다음과 같은 실제 데이터를 테스트합니다:
+
+- Kaia 메인넷/테스트넷 연결
+- 실제 주소의 잔액 조회
+- 블록 정보 및 트랜잭션 분석
+- 네트워크 성능 및 안정성
 
 ### 린팅
 

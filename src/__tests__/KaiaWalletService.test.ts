@@ -11,8 +11,8 @@ jest.mock('@kaiachain/ethers-ext', () => ({
   })),
 }));
 
-// Mock window.klaytn
-const mockKlaytn = {
+// Mock window.kaia
+const mockKaia = {
   enable: jest.fn(),
   selectedAddress: '0x1234567890123456789012345678901234567890',
   networkVersion: '8217',
@@ -38,9 +38,9 @@ describe('KaiaWalletService', () => {
   let metamaskWalletService: KaiaWalletService;
 
   beforeEach(() => {
-    // Window 객체에 klaytn과 ethereum 추가
-    Object.defineProperty(window, 'klaytn', {
-      value: mockKlaytn,
+    // Window 객체에 kaia와 ethereum 추가
+    Object.defineProperty(window, 'kaia', {
+      value: mockKaia,
       writable: true,
     });
 
@@ -64,7 +64,7 @@ describe('KaiaWalletService', () => {
     });
 
     it('Kaikas가 설치되어 있지 않을 때 false를 반환해야 함', () => {
-      Object.defineProperty(window, 'klaytn', {
+      Object.defineProperty(window, 'kaia', {
         value: undefined,
         writable: true,
       });
@@ -87,7 +87,7 @@ describe('KaiaWalletService', () => {
   describe('connect', () => {
     it('Kaikas 지갑이 성공적으로 연결되어야 함', async () => {
       const mockAccounts = ['0x1234567890123456789012345678901234567890'];
-      mockKlaytn.request.mockResolvedValue(mockAccounts);
+      mockKaia.request.mockResolvedValue(mockAccounts);
 
       // Mock Web3Provider methods
       const mockWeb3Provider = require('@kaiachain/ethers-ext').Web3Provider;
@@ -109,7 +109,7 @@ describe('KaiaWalletService', () => {
     });
 
     it('지갑이 없을 때 에러가 발생해야 함', async () => {
-      Object.defineProperty(window, 'klaytn', {
+      Object.defineProperty(window, 'kaia', {
         value: undefined,
         writable: true,
       });
@@ -123,7 +123,7 @@ describe('KaiaWalletService', () => {
 
   describe('getBalance', () => {
     it('잔액을 올바르게 조회해야 함', async () => {
-      const mockBalance = { toString: () => '1000000000000000000' }; // 1 KLAY in Wei
+      const mockBalance = { toString: () => '1000000000000000000' }; // 1 KAIA in Wei
 
       // Mock Web3Provider
       const mockWeb3Provider = require('@kaiachain/ethers-ext').Web3Provider;
@@ -179,7 +179,7 @@ describe('KaiaWalletService', () => {
 
       const result = await kaikasWalletService.sendTransaction({
         to: '0x9876543210987654321098765432109876543210',
-        value: '1000000000000000000', // 1 KLAY
+        value: '1000000000000000000', // 1 KAIA
       });
 
       expect(result.hash).toBe(mockHash);
@@ -234,11 +234,11 @@ describe('KaiaWalletService', () => {
   describe('switchNetwork', () => {
     it('네트워크 변경을 시도해야 함', async () => {
       const chainId = 1001; // Baobab testnet
-      mockKlaytn.request.mockResolvedValue(null);
+      mockKaia.request.mockResolvedValue(null);
 
       await kaikasWalletService.switchNetwork(chainId);
 
-      expect(mockKlaytn.request).toHaveBeenCalledWith({
+      expect(mockKaia.request).toHaveBeenCalledWith({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x3e9' }], // 1001 in hex
       });

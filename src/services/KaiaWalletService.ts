@@ -16,7 +16,7 @@ import { getNetworkByChainId } from '../config/networks';
 // Kaikas 및 MetaMask 지갑 타입 정의
 declare global {
   interface Window {
-    klaytn?: {
+    kaia?: {
       enable(): Promise<string[]>;
       selectedAddress: string;
       networkVersion: string;
@@ -91,7 +91,7 @@ export class KaiaWalletService extends EventEmitter implements IWallet {
 
     switch (this.walletProvider) {
       case WalletProvider.KAIKAS:
-        return !!window.klaytn && window.klaytn.isKaikas;
+        return !!window.kaia && window.kaia.isKaikas;
       case WalletProvider.METAMASK:
         return !!window.ethereum && window.ethereum.isMetaMask;
       default:
@@ -226,7 +226,7 @@ export class KaiaWalletService extends EventEmitter implements IWallet {
       }
 
       const balance = await this.web3Provider.getBalance(targetAddress!);
-      // Wei에서 KLAY로 변환
+      // Wei에서 KAIA로 변환
       return balance.toString();
     } catch (error) {
       throw new Error(`잔액 조회 실패: ${(error as Error).message}`);
@@ -342,7 +342,7 @@ export class KaiaWalletService extends EventEmitter implements IWallet {
   private getProvider(): any {
     switch (this.walletProvider) {
       case WalletProvider.KAIKAS:
-        return window.klaytn;
+        return window.kaia;
       case WalletProvider.METAMASK:
         return window.ethereum;
       default:

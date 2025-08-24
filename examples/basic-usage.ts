@@ -46,8 +46,8 @@ async function basicUsageExample(): Promise<void> {
 
       // 4. 잔액 조회
       const balanceWei = await wallet.getBalance();
-      const balanceKlay = formatEther(balanceWei);
-      console.log('계정 잔액:', balanceKlay, 'KLAY');
+      const balanceKaia = formatEther(balanceWei);
+      console.log('계정 잔액:', balanceKaia, 'KAIA');
 
       // 5. 메시지 서명 (예제)
       try {
@@ -62,7 +62,7 @@ async function basicUsageExample(): Promise<void> {
       /*
       const txResult = await wallet.sendTransaction({
         to: '0x742d35Cc6634C0532925a3b8D0Ac9E0C4E0f5c2',
-        value: '1000000000000000000', // 1 KLAY
+        value: '1000000000000000000', // 1 KAIA
       });
       console.log('트랜잭션 결과:', txResult);
       */

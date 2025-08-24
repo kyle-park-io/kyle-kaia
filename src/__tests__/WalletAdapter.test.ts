@@ -11,8 +11,8 @@ jest.mock('@kaiachain/ethers-ext', () => ({
   })),
 }));
 
-// Mock window.klaytn
-const mockKlaytn = {
+// Mock window.kaia
+const mockKaia = {
   enable: jest.fn(),
   selectedAddress: '0x1234567890123456789012345678901234567890',
   networkVersion: '8217',
@@ -33,9 +33,9 @@ const mockEthereum = {
   request: jest.fn(),
 };
 
-// Window 객체에 klaytn과 ethereum 추가
-Object.defineProperty(window, 'klaytn', {
-  value: mockKlaytn,
+// Window 객체에 kaia과 ethereum 추가
+Object.defineProperty(window, 'kaia', {
+  value: mockKaia,
   writable: true,
 });
 
@@ -49,8 +49,8 @@ describe('WalletAdapter', () => {
 
   beforeEach(() => {
     // Window 객체 재설정
-    Object.defineProperty(window, 'klaytn', {
-      value: mockKlaytn,
+    Object.defineProperty(window, 'kaia', {
+      value: mockKaia,
       writable: true,
     });
 
@@ -76,7 +76,7 @@ describe('WalletAdapter', () => {
 
     it('지갑이 사용 불가능할 때 목록에서 제외되어야 함', () => {
       // 모든 지갑 비활성화
-      Object.defineProperty(window, 'klaytn', {
+      Object.defineProperty(window, 'kaia', {
         value: undefined,
         writable: true,
       });
@@ -120,7 +120,7 @@ describe('WalletAdapter', () => {
       };
       mockWeb3Provider.mockImplementation(() => mockInstance);
 
-      mockKlaytn.request.mockResolvedValue([
+      mockKaia.request.mockResolvedValue([
         '0x1234567890123456789012345678901234567890',
       ]);
 
@@ -130,7 +130,7 @@ describe('WalletAdapter', () => {
 
     it('사용 가능한 지갑이 없을 때 null을 반환해야 함', async () => {
       // 모든 지갑 비활성화
-      Object.defineProperty(window, 'klaytn', {
+      Object.defineProperty(window, 'kaia', {
         value: undefined,
         writable: true,
       });
@@ -171,7 +171,7 @@ describe('WalletAdapter', () => {
       };
       mockWeb3Provider.mockImplementation(() => mockInstance);
 
-      mockKlaytn.request.mockResolvedValue([
+      mockKaia.request.mockResolvedValue([
         '0x1234567890123456789012345678901234567890',
       ]);
 
